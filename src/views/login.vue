@@ -8,8 +8,11 @@
         <span class="iconfont iconnew"></span>
       </div>
       <div class="inputs">
-        <input data-v-744880be placeholder="请输入手机号" class="input" />
-        <input data-v-744880be placeholder="密码" class="input" type="password" />
+       <myinput placeholder='请输入手机号' v-model="userobj.username"
+       :rules='/^1\d{10}$/'
+       msg_err='手机号输入不正确'
+       ></myinput>
+        <myinput placeholder='密码' v-model='userobj.password'></myinput>
       </div>
       <p class="tips">
         没有账号？
@@ -22,22 +25,30 @@
 
 <script>
 import mybutton from '@/components/mybutton.vue'
+import myinput from '@/components/myinput.vue'
+import { login } from '@/apis/users.js'
 export default {
   data () {
     return {
       userobj: {
-        username: 'jack',
-        password: '123'
+        username: '',
+        password: ''
       }
     }
   },
   methods: {
     login () {
-      console.log(this.userobj)
+      login(this.userobj)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   components: {
-    mybutton
+    mybutton, myinput
   }
 }
 </script>
