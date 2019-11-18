@@ -8,17 +8,28 @@
         <span class="iconfont iconnew"></span>
       </div>
       <div class="inputs">
-       <myinput placeholder='请输入手机号' v-model="userobj.username"
+       <myinput placeholder='请输入手机号'
+       v-model="userobj.username"
        :rules='/^1\d{10}$/'
        msg_err='手机号输入不正确'
        ></myinput>
-        <myinput placeholder='密码' v-model='userobj.password'></myinput>
+       <myinput placeholder='请输入密码'
+       type='password'
+       v-model="userobj.password"
+       :rules='/^\w{3,16}$/'
+       msg_err='请输入3-16位的密码'
+       ></myinput>
+       <myinput placeholder='请输入昵称'
+       v-model="userobj.nickname"
+       :rules='/^\w+$/'
+       msg_err='手机号输入不正确'
+       ></myinput>
       </div>
       <p class="tips">
-        没有账号？
-        <a href="#/register" class>去注册</a>
+        有账号？
+        <a href="#/login" class>登录</a>
       </p>
-     <mybutton text='登录' type='danger' @click='login'></mybutton>
+     <mybutton text='注册' type='danger' @click="register"></mybutton>
     </div>
   </div>
 </template>
@@ -26,31 +37,26 @@
 <script>
 import mybutton from '@/components/mybutton.vue'
 import myinput from '@/components/myinput.vue'
-import { login } from '@/apis/users.js'
+import { register } from '@/apis/users.js'
 export default {
   data () {
     return {
       userobj: {
         username: '',
-        password: ''
+        password: '',
+        nickname: ''
       }
     }
   },
   methods: {
-    login () {
-      login(this.userobj)
-        .then(res => {
-          console.log(res)
-          if (res.data.message === '登录成功') {
-            this.$router.push({ path: `/personal/${res.data.data.user.id}` })
-          } else {
-            this.$toast.fail(res.data.message)
-          }
-        })
-        .catch(err => {
-          console.log(err)
-          this.$toast.fail('服务器异常，请重试')
-        })
+    async register () {
+      var res = await register(this.userobj)
+      if (res.data.message === '注册成功') {
+        this.$toast.fail('注册成功,请进行登陆')
+        this.$router.push({ name: 'Login' })
+      } else {
+        this.$toast.fail('注册失败')
+      }
     }
   },
   components: {
