@@ -14,3 +14,13 @@ export const register = (data) => {
     data
   })
 }
+
+export const getUserInfoById = (id) => {
+  return axios({
+    // 拦截器代做了这一步
+    // headers: {
+    //   Authorization: localStorage.getItem('heima_39_Authorization')
+    // },
+    url: `/user/${id}`
+  })
+}

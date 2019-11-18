@@ -3,7 +3,7 @@
     <span>{{title}}</span>
     <div>
         <span>{{desc}}</span>
-        <span class="iconfont iconjiantou1">></span>
+        <span class="iconfont iconjiantou1"></span>
     </div>
 </div>
 </template>

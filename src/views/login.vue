@@ -40,8 +40,8 @@ export default {
     login () {
       login(this.userobj)
         .then(res => {
-          console.log(res)
           if (res.data.message === '登录成功') {
+            localStorage.setItem('heima_39_Authorization', res.data.data.token)
             this.$router.push({ path: `/personal/${res.data.data.user.id}` })
           } else {
             this.$toast.fail(res.data.message)
