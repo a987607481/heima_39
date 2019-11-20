@@ -1,6 +1,6 @@
 <template>
   <div class="personal">
-    <router-link to="/edit_profile">
+    <router-link :to="`/editPersonal/${currentUser.id}`">
       <div class="profile">
         <!-- $axios.defaults.baseURL读取axios的服务器路径 -->
         <img :src="currentUser.head_img" alt />
@@ -29,10 +29,7 @@ import { timeformat } from '@/utils/myfilters.js'
 export default {
   data () {
     return {
-      currentUser: {
-        nickname: '',
-        time: ''
-      }
+      currentUser: {}
     }
   },
   components: {
@@ -46,7 +43,7 @@ export default {
     let res = await getUserInfoById(id)
     console.log(res)
     if (res.data.message === '获取成功') {
-      this.currentUser.nickname = res.data.data.nickname
+      this.currentUser = res.data.data
       this.currentUser.time = new Date()
       if (this.currentUser.head_img) {
         // 拼接基准路径
@@ -54,6 +51,8 @@ export default {
       } else {
         this.currentUser.head_img = './avatar.jpg'
       }
+    } else if (res.data.message === '用户信息验证失败!') {
+      this.$router.push({ name: 'Login' })
     }
   }
 }

@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .btn {
   width: 90%;
   height: 40px;

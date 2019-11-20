@@ -1,5 +1,6 @@
 import axios from '@/utils/myaxios.js'
 
+// 登录
 export const login = (data) => {
   return axios({
     method: 'post',
@@ -7,6 +8,7 @@ export const login = (data) => {
     data
   })
 }
+// 注册
 export const register = (data) => {
   return axios({
     method: 'post',
@@ -15,6 +17,7 @@ export const register = (data) => {
   })
 }
 
+// 根据id获取用户数据
 export const getUserInfoById = (id) => {
   return axios({
     // 拦截器代做了这一步
@@ -22,5 +25,13 @@ export const getUserInfoById = (id) => {
     //   Authorization: localStorage.getItem('heima_39_Authorization')
     // },
     url: `/user/${id}`
+  })
+}
+// 根据id修改用户数据
+export const updateUserInfo = (id, data) => {
+  return axios({
+    method: 'post',
+    url: `/user_update/${id}`,
+    data
   })
 }
