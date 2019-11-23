@@ -128,6 +128,7 @@ export default {
     async onChange (picker, value, index) {
       console.log(`${picker},当前值：${value}, 当前索引：${index}`)
       this.genderindex = index
+      console.log(this.userobj.gender)
     },
     // 修改性别
     async updategender () {
@@ -171,6 +172,7 @@ export default {
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+      object-fit: cover
     }
     .van-uploader {
       width: 70px;

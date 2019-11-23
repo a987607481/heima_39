@@ -25,7 +25,7 @@ export default {
     background-color: #eee;
     border-bottom: 1px solid #ccc;
     span:nth-child(1), span:nth-child(3){
-        width: 40px;
+      padding: 0 10px;
         text-align: center;
     }
      span:nth-child(2){

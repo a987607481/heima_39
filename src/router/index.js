@@ -5,6 +5,10 @@ import Login from '@/views/login.vue'
 import Register from '@/views/register.vue'
 import PersonalCenter from '@/views/personalCenter.vue'
 import EditPersonal from '@/views/editPersonal.vue'
+import Index from '@/views/index.vue'
+import ArticleDeatil from '@/views/articleDeatil.vue'
+import Myfocus from '@/views/myfocus.vue'
+import Mystars from '@/views/mystars.vue'
 
 Vue.use(VueRouter)
 
@@ -29,6 +33,31 @@ var router = new VueRouter({
       name: 'EditPersonal',
       path: '/editPersonal/:id',
       component: EditPersonal
+    },
+    {
+      name: 'Index',
+      path: '/index',
+      component: Index
+    },
+    {
+      name: 'default',
+      path: '/',
+      redirect: { name: 'Index' }
+    },
+    {
+      name: 'ArticleDeatil',
+      path: '/articleDeatil/:id',
+      component: ArticleDeatil
+    },
+    {
+      name: 'Myfocus',
+      path: '/myfocus',
+      component: Myfocus
+    },
+    {
+      name: 'Mystars',
+      path: '/mystars',
+      component: Mystars
     }
   ]
 })

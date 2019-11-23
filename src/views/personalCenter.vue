@@ -6,19 +6,18 @@
         <img :src="currentUser.head_img" alt />
         <div class="profile-center">
           <div class="name">
-            <span class="iconfont iconxingbienan"></span>{{currentUser.nickname}}
+            <span class="iconfont iconxingbienan"></span>
+            {{currentUser.nickname}}
           </div>
           <div class="time">{{currentUser.time | timeformat('-')}}</div>
         </div>
         <span class="iconfont iconjiantou1"></span>
       </div>
     </router-link>
-    <router-link to="">
-      <mycell title='我的关注' desc='关注的用户'></mycell>
-      <mycell title='我的跟帖' desc='跟帖/回复'></mycell>
-      <mycell title='我的收藏' desc='文章/视频'></mycell>
-      <mycell title='设置'></mycell>
-    </router-link>
+    <mycell title="我的关注" desc="关注的用户" @click="$router.push({name: 'Myfocus'})"></mycell>
+    <mycell title="我的跟帖" desc="跟帖/回复"></mycell>
+    <mycell title="我的收藏" desc="文章/视频" @click="$router.push({name: 'Mystars'})"></mycell>
+    <mycell title="设置"></mycell>
   </div>
 </template>
 
@@ -47,7 +46,8 @@ export default {
       this.currentUser.time = new Date()
       if (this.currentUser.head_img) {
         // 拼接基准路径
-        this.currentUser.head_img = localStorage.getItem('heima_39_baseurl') + this.currentUser.head_img
+        this.currentUser.head_img =
+          localStorage.getItem('heima_39_baseurl') + this.currentUser.head_img
       } else {
         this.currentUser.head_img = './avatar.jpg'
       }
@@ -59,13 +59,13 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.personal{
-    width: 100vw;
-    height: 100vh;
-    background-color: #eee;
+.personal {
+  width: 100vw;
+  height: 100vh;
+  background-color: #eee;
 }
-a{
-    color: #666;
+a {
+  color: #666;
 }
 .profile {
   display: flex;
