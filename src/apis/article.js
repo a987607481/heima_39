@@ -28,3 +28,19 @@ export const startThisArticle = (id) => {
     url: `/post_star/${id}`
   })
 }
+
+// 获取文件评论数据
+export const getArticleComments = (id) => {
+  return axios({
+    url: `/post_comment/${id}`
+  })
+}
+
+// 发表评论
+export const publishComment = (id, data) => {
+  return axios({
+    method: 'post',
+    url: `/post_comment/${id}`,
+    data
+  })
+}

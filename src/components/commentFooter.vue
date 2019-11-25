@@ -1,31 +1,33 @@
 <template>
+<!-- 此组件为最下方回复组件 -->
   <div class="comment">
     <div class="addcomment" v-show="!isFocus">
       <input type="text" placeholder="写跟帖" @click="isFocus=!isFocus" />
-      <span class="comment">
+      <span class="comment" @click="$router.push({path:`/comments/${post.id}`})">
         <i class="iconfont iconpinglun-"></i>
-        <em>100</em>
+        <em>{{post.comment_length}}</em>
       </span>
       <i class="iconfont iconshoucang" @click="starArticle" :class="{active:post.has_star}"></i>
       <i class="iconfont iconfenxiang"></i>
     </div>
     <div class="inputcomment" v-show="isFocus">
-      <textarea ref="commtext" rows="5"></textarea>
+      <textarea ref="commtext" rows="5"  :placeholder="placeholder" autofocus></textarea>
       <div>
-        <span>发送</span>
-        <span @click="isFocus=!isFocus">取消</span>
+        <span @click="sendComment">发送</span>
+        <span @click="cancelcomment">取消</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { startThisArticle } from '@/apis/article.js'
+import { startThisArticle, publishComment } from '@/apis/article.js'
 export default {
-  props: ['post'],
+  props: ['post', 'replayobj'],
   data () {
     return {
-      isFocus: false
+      isFocus: false,
+      placeholder: ''
     }
   },
   methods: {
@@ -36,6 +38,43 @@ export default {
         this.post.has_star = true
       } else {
         this.post.has_star = false
+      }
+    },
+    // 发送评论
+    async sendComment () {
+      let data = {
+        content: this.$refs.commtext.value
+      }
+      // 当点击的是嵌套（commentltem组件）里的回复的时候，需要向数据库加上一个parent_id，使页面有嵌套效果，如果点击的是父类的回复，那么此项就为null
+      if (this.replayobj) {
+        data.parent_id = this.replayobj.id
+      }
+      let res = await publishComment(this.post.id, data)
+      if (res.data.message === '评论发布成功') {
+        // 发布成功向父组件发送一个事件，重新获取一次页面数据，达到刷新效果
+        this.$emit('refreshComment')
+        this.$refs.commtext.value = ''
+        this.isFocus = false
+      }
+    },
+    // 取消评论
+    // 因为当点击回复的时候，commentltem会发送点击项的数据过来（通过子传父，父传子），此时点取消如果不做处理会导致下次点回复会没有反应（因为数据没改变，所以不会触发监听），这个时候我们可以发送一个事件给父组件，使commentltem组件发送过来的值清空，所有当再次点点击的时候数据就发生了变化，watch也能触发相应的事件
+    cancelcomment () {
+      this.$refs.commtext.value = ''
+      this.isFocus = false
+      this.$emit('resetreplayobj')
+    }
+  },
+  watch: {
+    // 子传子，这里用的方法是先子传父，然后再用父传另外一个子
+    replayobj () {
+      console.log(this.replayobj)
+      if (this.replayobj) {
+        this.isFocus = true
+        this.placeholder = '@' + this.replayobj.user.nickname
+        setTimeout(() => {
+          this.$refs.commtext.focus()
+        }, 0)
       }
     }
   }
