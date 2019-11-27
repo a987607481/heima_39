@@ -9,6 +9,7 @@
         <div class="btn" @click="userFollow" :class="{active:isActive}">{{focuText}}</div>
       </div>
     </myheader>
+    <!-- 图片内容 -->
     <div class="content" v-if="article.type === 1">
       <div class="title">{{article.title || ''}}</div>
       <div class="info">
@@ -27,6 +28,11 @@
         <van-button icon="chat" type="primary" round>微信</van-button>
       </div>
     </div>
+    <!-- 视频内容 -->
+    <div class="video" v-if="article.type === 2">
+      <video :src="article.content" controls :poster="article.cover[0].url"></video>
+    </div>
+    <!-- 精彩跟帖 -->
     <div class="commentList">
       <h2>精彩跟帖</h2>
       <div class="item" v-for="value in articleComments" :key="value.id">
@@ -132,6 +138,7 @@ export default {
     this.isActive = this.article.has_follow
     this.focuText = this.isActive ? '已关注' : '关注'
     this.init()
+    console.log(this.article)
   }
 }
 </script>
@@ -197,6 +204,12 @@ export default {
   .opt {
     display: flex;
     justify-content: space-around;
+  }
+}
+.video {
+  width: 100%;
+  > video {
+    width: 100%;
   }
 }
 .commentList {

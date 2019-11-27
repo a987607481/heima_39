@@ -18,6 +18,7 @@
     <mycell title="我的跟帖" desc="跟帖/回复"></mycell>
     <mycell title="我的收藏" desc="文章/视频" @click="$router.push({name: 'Mystars'})"></mycell>
     <mycell title="设置"></mycell>
+    <van-button type="primary" class="exitbtn" @click="exit">退出</van-button>
   </div>
 </template>
 
@@ -36,6 +37,13 @@ export default {
   },
   filters: {
     timeformat
+  },
+  methods: {
+    exit () {
+      localStorage.removeItem('heima_39_Authorization')
+      localStorage.removeItem('heima_39_id')
+      this.$router.push('/')
+    }
   },
   async mounted () {
     let id = this.$route.params.id
@@ -66,6 +74,13 @@ export default {
 }
 a {
   color: #666;
+}
+.exitbtn{
+  width: 90%;
+  margin: 20px auto;
+  display: block;
+  border-radius: 22px;
+
 }
 .profile {
   display: flex;

@@ -2,7 +2,7 @@
   <div class="index">
     <div class="header">
       <div class="logo iconfont iconnew"></div>
-      <div class="search" @click="$router.push('/search')">
+      <div class="search" @click="$router.push({ path: '/search'})">
         <van-icon name="search" />搜索新闻
       </div>
       <van-icon name="user-circle-o" class="icon_user" @click="goPersonal" />

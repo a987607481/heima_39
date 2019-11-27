@@ -10,6 +10,7 @@ import ArticleDeatil from '@/views/articleDeatil.vue'
 import Myfocus from '@/views/myfocus.vue'
 import Mystars from '@/views/mystars.vue'
 import Comments from '@/views/comments.vue'
+import Search from '@/views/search.vue'
 
 Vue.use(VueRouter)
 
@@ -64,6 +65,11 @@ var router = new VueRouter({
       name: 'Comments',
       path: '/comments/:id',
       component: Comments
+    },
+    {
+      name: 'Search',
+      path: '/search',
+      component: Search
     }
   ]
 })

@@ -1,7 +1,7 @@
 <template>
   <div class="sour">
     <!-- 此组件是精彩回复下面的嵌套 -->
-    <mycomment v-if="data.parent" :data="data.parent" @replayComment="sendComment(data.parent)"></mycomment>
+    <mycomment v-if="data.parent" :data="data.parent" @replayComment="sendComment"></mycomment>
     <p>
       <span>{{data.user.nickname}} &nbsp;&nbsp;2小时前</span>
       <span @click="sendComment(data)">回复</span>
